@@ -1,11 +1,14 @@
 package com.otakutv;
 
+import java.sql.Date;
+
 public class Anime {
     //Atributos de la clase Anime.
     //Levanté todos los campos del administrador de ánimes, excepto "Fecha estreno"
 
     private int idAnime;  // ID autoincremental del anime (int)
-    private String titulo; // Título del anime (varchar)
+    private String titulo;
+    private Date fecha; // Título del anime (varchar)
     private String genero;   // Género del anime (varchar)
     private String duracion; // Duración del anime (varchar)
     private String director;  // Director del anime (varchar)
@@ -17,9 +20,10 @@ public class Anime {
     public Anime(){}
 
     //Constructor con parámetros para inicializar todos los atributos.
-    public Anime( int idAnime, String titulo, String genero, String duracion, String director, String reparto, String sinopsis, String imagen){
+    public Anime( int idAnime, String titulo, Date fecha, String genero, String duracion, String director, String reparto, String sinopsis, String imagen){
         this.idAnime = idAnime;
         this.titulo = titulo;
+        this.fecha = fecha;
         this.genero = genero;
         this.duracion = duracion;
         this.director = director;
@@ -96,7 +100,13 @@ public class Anime {
         this.imagen = imagen;
     }
 
+    public Date getFecha() {
+        return this.fecha ;
+    }
 
+    public void setFecha(Date fecha){
+        this.fecha = fecha;
+    }
 
 
 }

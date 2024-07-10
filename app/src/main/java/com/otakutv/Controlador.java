@@ -38,17 +38,19 @@ public class Controlador extends HttpServlet {
             Anime anime = mapper.readValue(request.getInputStream(), Anime.class);  // Convertir el JSON de la solicitud a un objeto Pelicula
         
             // Consulta SQL para insertar una nueva película en la tabla 'peliculas'
-            String query = "INSERT INTO anime (titulo, genero, duracion, director, reparto, sinopsis, imagen) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO animes (titulo, fecha_estreno, genero, duracion, director, reparto, sinopsis, IMAGEN) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            System.out.println(query);
             PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);  // Indicar que queremos obtener las claves generadas automáticamente
         
             // Establecer los parámetros de la consulta de inserción
             statement.setString(1, anime.getTitulo());
-            statement.setString(2, anime.getGenero());
-            statement.setString(3, anime.getDuracion());
-            statement.setString(4, anime.getDirector());
-            statement.setString(5, anime.getReparto());
-            statement.setString(6, anime.getSinopsis());
-            statement.setString(7, anime.getImagen());
+            statement.setDate(2, anime.getFecha());
+            statement.setString(3, anime.getGenero());
+            statement.setString(4, anime.getDuracion());
+            statement.setString(5, anime.getDirector());
+            statement.setString(6, anime.getReparto());
+            statement.setString(7, anime.getSinopsis());
+            statement.setString(8, anime.getImagen());
         
             statement.executeUpdate();  // Ejecutar la consulta de inserción en la base de datos
         
@@ -98,7 +100,8 @@ public class Controlador extends HttpServlet {
                 // Crear un objeto Pelicula con los datos de cada fila
                 Anime anime = new Anime(
                     resultSet.getInt("id_anime"),
-                    resultSet.getString("titulo"),  
+                    resultSet.getString("titulo"),
+                    resultSet.getDate("fecha_estreno"),  
                     resultSet.getString("genero"),
                     resultSet.getString("duracion"),
                     resultSet.getString("director"),
